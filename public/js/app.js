@@ -1,7 +1,6 @@
 
-var timerInterval; // Variable zum Speichern des Intervalls für den Timer
-
-var timerCount = 0; // Variable zum Speichern des aktuellen Timer-Werts
+var timerInterval; 
+var timerCount = 0; 
 
 function StartTimer() {
     var startImg = document.getElementById("StartImg");
@@ -11,17 +10,37 @@ function StartTimer() {
     var startActive = startImg.src.includes("Start-Active.png");
 
     if (!startActive) {
+        fetch('/api/work-time/start', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({}) 
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
         timerCount = 0;
         timerElement.textContent = "Time: " + formatTime(timerCount);
 
         startImg.src = startImg.src.replace("Start-NotActive.png", "Start-Active.png");
         stopImg.src = stopImg.src.replace("Stop-Active.png", "Stop-NotActive.png");
 
-        // Starte den Timer und aktualisiere ihn jede Sekunde
         timerInterval = setInterval(function() {
             timerCount++;
             timerElement.textContent = "Time: " + formatTime(timerCount);
-        }, 1000); // Timer wird alle 1000ms (1 Sekunde) aktualisiert
+        }, 1000); 
     }
 }
 
@@ -33,10 +52,31 @@ function StopTimer() {
     var stopActive = stopImg.src.includes("Stop-Active.png");
 
     if (!stopActive && startActive) {
+        fetch('/api/work-time/stop', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({}) 
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+        
         stopImg.src = stopImg.src.replace("Stop-NotActive.png", "Stop-Active.png");
         startImg.src = startImg.src.replace("Start-Active.png", "Start-NotActive.png");
 
-        // Stoppe den Timer
         clearInterval(timerInterval);
     }
 }
@@ -45,7 +85,6 @@ function formatTime(seconds) {
     var minutes = Math.floor(seconds / 60);
     var remainingSeconds = seconds % 60;
 
-    // Füge führende Nullen hinzu, wenn nötig
     var formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
     var formattedSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
 
