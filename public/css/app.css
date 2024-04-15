@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+    text-align: center;
+}
+table {
+    width: 100%;
+}
+img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
