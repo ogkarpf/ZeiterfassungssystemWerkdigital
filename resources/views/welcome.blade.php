@@ -16,8 +16,8 @@
     </head>
     <body>
         <div>
-            <h1>Zeiterfassung</h1>
-            <h2 id="timer">Time: 00:00</h2>
+            <h1 class="text-center">Zeiterfassung</h1>
+            <h2 class="text-center" id="timer">Time: 00:00</h2>
             <table>
                 <tr>
                     <td>
@@ -28,6 +28,7 @@
                     </td>
                 </tr>
             </table>
+            <h2 class="text-center"><a href="/overview">Übersicht</a></h1>
         </div>
     </body>
 </html>

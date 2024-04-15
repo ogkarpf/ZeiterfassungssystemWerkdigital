@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkTimeController;
+use App\Http\Controllers\OverviewController;
 use Illuminate\Support\Facades\Route;
 
 // API Routen
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });
+    Route::get('/overview', [OverviewController::class, 'getOverview'])->name('overview');
 });
 
 require __DIR__.'/auth.php';
