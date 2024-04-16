@@ -15,6 +15,7 @@
 
     </head>
     <body>
+        <input id="userid" value="{{ auth()->id() }}" hidden>
         <div>
             <h1 class="text-center">Zeiterfassung</h1>
             <h2 class="text-center" id="timer">Time: 00:00</h2>
